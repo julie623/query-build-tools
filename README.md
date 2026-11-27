@@ -43,3 +43,10 @@ Malformed percent-encoding in `parseQuery` (for example `%ZZ`) does not throw;
 the raw segment is returned. `buildQuery` throws a `TypeError` for anything that
 is not a plain object, and `parseQuery` throws a `TypeError` for non-string,
 non-null input. A key with no `=` is parsed as having an empty-string value.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
